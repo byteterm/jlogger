@@ -2,6 +2,11 @@ package de.byteterm.jlogger.level;
 
 import de.byteterm.jlogger.util.ConsoleColor;
 
+/**
+ * Todo: Commit this enum.
+ * @since 1.0
+ * @author Niklas Tat
+ */
 public enum LogLevel {
     DEBUG(ConsoleColor.CYAN_BOLD, "DEBUG"),
     INFO(ConsoleColor.GREEN, "INFO "),

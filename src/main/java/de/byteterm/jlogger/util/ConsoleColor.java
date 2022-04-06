@@ -1,5 +1,10 @@
 package de.byteterm.jlogger.util;
 
+/**
+ * Todo: Commit this enum.
+ * @since 1.0
+ * @author Niklas Tat
+ */
 public enum ConsoleColor {
 
     BLACK("\u001B[30m"),

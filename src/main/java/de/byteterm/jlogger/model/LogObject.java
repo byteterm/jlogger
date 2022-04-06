@@ -5,6 +5,11 @@ import de.byteterm.jlogger.level.LogLevel;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Todo: Commit this class.
+ * @since 1.0
+ * @author Niklas Tat
+ */
 public class LogObject implements Serializable {
 
     private final String message;

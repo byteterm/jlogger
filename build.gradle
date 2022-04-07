@@ -1,6 +1,7 @@
 
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
 group = "de.byteterm"
@@ -12,4 +13,29 @@ repositories {
 
 dependencies {
     implementation 'org.jetbrains:annotations:22.0.0'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = group
+            artifactId = rootProject.name
+            version = version
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url "https://gitlab.com/api/v4/projects/35070360/packages/maven"
+
+            credentials(HttpHeaderCredentials) {
+                name = "Private-Token"
+                value = personalToken
+            }
+
+            authentication {
+                header(HttpHeaderAuthentication)
+            }
+        }
+    }
 }

@@ -13,7 +13,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- *
+ * Todo: Commit this class.
+ * @since 1.0
+ * @author Niklas Tat
  */
 public class DefaultLogger implements Logger {
 

@@ -7,6 +7,11 @@ import de.byteterm.jlogger.util.ConsoleColor;
 
 import java.util.List;
 
+/**
+ * Todo: commit what this interface doing...
+ * @since 1.0
+ * @author Niklas Tat
+ */
 public interface Logger {
 
      /*
@@ -111,8 +116,8 @@ public interface Logger {
         return Logger.Holder.logger;
     }
 
-    static void setLogger(Logger loggerOld) {
-        Logger.Holder.logger = loggerOld;
+    static void setLogger(Logger logger) {
+        Logger.Holder.logger = logger;
     }
 
     class Holder {

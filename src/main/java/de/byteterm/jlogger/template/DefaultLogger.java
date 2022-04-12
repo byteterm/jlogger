@@ -24,6 +24,14 @@ public class DefaultLogger implements Logger {
 
     @Override
     public void print(LogObject logObject) {
+        // Check if the log Level is debug
+        if (logObject.getLevel() == LogLevel.DEBUG) {
+            // check if log level is activated
+            if (!Logger.isDebugEnabled()) {
+                return;
+            }
+        }
+
         if (logObject.getMessage() != null)
             printMessage(logObject);
 

@@ -120,12 +120,23 @@ public interface Logger {
         Logger.Holder.logger = logger;
     }
 
+    static void enableDebug(boolean debugMode) {
+        Holder.debug = debugMode;
+    }
+
+    static Boolean isDebugEnabled() {
+        return Holder.debug;
+    }
+
     class Holder {
 
         static {
             logger = new DefaultLogger();
+            debug = false;
         }
 
         private static Logger logger;
+
+        private static boolean debug;
     }
 }

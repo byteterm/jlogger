@@ -6,6 +6,9 @@ import de.byteterm.jlogger.model.LogObject;
 import de.byteterm.jlogger.util.ConsoleColor;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,8 +22,17 @@ import java.util.List;
  */
 public class DefaultLogger implements Logger {
 
-    private final String FORMAT = ConsoleColor.RESET + "%1$s %2$5s " + ConsoleColor.RESET + "[" + ConsoleColor.PURPLE + "%3$15s" + ConsoleColor.RESET + "] " + ConsoleColor.RESET + "%4$-40s " + ConsoleColor.RESET + ": %5$s";
-    private static final String DEFAULT_PATTERN = "dd.MM.yyyy HH:mm:ss";
+    private final String format;
+    private final String defaultPattern;
+    private String logName;
+
+    private File logDirectory;
+    private File logFile;
+
+    public DefaultLogger() {
+        this.format = ConsoleColor.RESET + "%1$s %2$5s " + ConsoleColor.RESET + "[" + ConsoleColor.PURPLE + "%3$15s" + ConsoleColor.RESET + "] " + ConsoleColor.RESET + "%4$-40s " + ConsoleColor.RESET + ": %5$s";
+        this.defaultPattern = "dd.MM.yyyy HH:mm:ss";
+    }
 
     @Override
     public void print(LogObject logObject) {
@@ -32,9 +44,11 @@ public class DefaultLogger implements Logger {
             }
         }
 
+        // Check if logObject contains a Message
         if (logObject.getMessage() != null)
             printMessage(logObject);
 
+        // Check if logObject contains a Message list
         if (logObject.getMessageList() != null
                 && !logObject.getMessageList().isEmpty()) {
             printMessageList(logObject);
@@ -259,6 +273,17 @@ public class DefaultLogger implements Logger {
         print(logBorder);
     }
 
+    @Override
+    public void setLogPath(String path) {
+        this.logDirectory = new File(path);
+        this.logDirectory.mkdir();
+    }
+
+    @Override
+    public String getLogPath() {
+        return null;
+    }
+
     private void printThrowable(Throwable throwable, LogLevel logLevel) {
         List<String> messages = new ArrayList<>();
 
@@ -325,12 +350,70 @@ public class DefaultLogger implements Logger {
         if (logObject.getLevel() == LogLevel.EMPTY) {
             System.out.println(logObject.getLevel().getColor() + logObject.getMessage());
         } else {
-            System.out.printf((FORMAT) + "%n",
-                    new SimpleDateFormat(DEFAULT_PATTERN).format(new Date(logObject.getMillis())),
+            String message = String.format(format,
+                    new SimpleDateFormat(defaultPattern).format(new Date(logObject.getMillis())),
                     logObject.getLevel().getColor() + logObject.getLevel().getPrefix(),
                     ManagementFactory.getThreadMXBean().getThreadInfo(logObject.getThreadId()).getThreadName(),
                     logObject.getSourceClassName(),
                     logObject.getMessage());
+
+            System.out.println(message);
+
+            if (logObject.getLevel() != LogLevel.DEBUG)
+                logMessage(logObject.getMillis(), message);
+        }
+    }
+
+    private void printMessageList(@NotNull LogObject logObject) {
+        for (String message : logObject.getMessageList()) {
+
+            if (logObject.getLevel() == LogLevel.EMPTY) {
+                System.out.println(logObject.getLevel().getColor() + message);
+            } else {
+                String logMessage = String.format(format,
+                        new SimpleDateFormat(defaultPattern).format(new Date(logObject.getMillis())),
+                        logObject.getLevel().getColor() + logObject.getLevel().getPrefix(),
+                        ManagementFactory.getThreadMXBean().getThreadInfo(logObject.getThreadId()).getThreadName(),
+                        logObject.getSourceClassName(),
+                        message);
+
+                System.out.println(logMessage);
+
+                if (logObject.getLevel() != LogLevel.DEBUG)
+                    logMessage(logObject.getMillis(), message);
+            }
+        }
+    }
+
+    private void logMessage(long timeMillis, String message) {
+        if (Logger.isLogging()) {
+            if (this.logDirectory == null)
+                setLogPath("logs");
+            createLogFile(timeMillis);
+
+            try {
+                FileWriter fileWriter = new FileWriter(logFile);
+
+                fileWriter.write(message.replaceAll("\\e\\[[\\d;]*[^\\d;]",""));
+                fileWriter.close();
+            } catch (IOException ex) {
+                error(ex);
+            }
+        }
+    }
+
+    private void createLogFile(long timeMillis) {
+        String rightLogName = new SimpleDateFormat("dd.MM.yyyy").format(timeMillis) + ".log";
+
+        if (this.logName != rightLogName) {
+            this.logName = rightLogName;
+
+            this.logFile = new File(logDirectory, logName);
+            try {
+                logFile.createNewFile();
+            } catch (IOException ex) {
+                error(ex);
+            }
         }
     }
 
@@ -344,22 +427,6 @@ public class DefaultLogger implements Logger {
         }
 
         return lineSize + 6;
-    }
-
-    private void printMessageList(@NotNull LogObject logObject) {
-        for (String message : logObject.getMessageList()) {
-
-            if (logObject.getLevel() == LogLevel.EMPTY) {
-                System.out.println(logObject.getLevel().getColor() + message);
-            } else {
-                System.out.printf((FORMAT) + "%n",
-                        new SimpleDateFormat(DEFAULT_PATTERN).format(new Date(logObject.getMillis())),
-                        logObject.getLevel().getColor() + logObject.getLevel().getPrefix(),
-                        ManagementFactory.getThreadMXBean().getThreadInfo(logObject.getThreadId()).getThreadName(),
-                        logObject.getSourceClassName(),
-                        message);
-            }
-        }
     }
 
     private String checkSourceSizeCheck(@NotNull String className) {

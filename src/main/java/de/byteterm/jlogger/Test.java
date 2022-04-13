@@ -6,6 +6,6 @@ public class Test {
 
     public static void main(String[] args) {
         Logger.enableDebug(true);
-        log.debug("This is an Logger test....");
+        log.info("This is an Logger test....");
     }
 }

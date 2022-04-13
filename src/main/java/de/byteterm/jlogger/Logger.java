@@ -5,6 +5,7 @@ import de.byteterm.jlogger.template.DefaultLogger;
 import de.byteterm.jlogger.model.LogObject;
 import de.byteterm.jlogger.util.ConsoleColor;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -112,6 +113,10 @@ public interface Logger {
 
     void list(LogObject logObject, String headline, char lineChar, ConsoleColor consoleColor);
 
+    void setLogPath(String path);
+
+    String getLogPath();
+
     static Logger getLogger() {
         return Logger.Holder.logger;
     }
@@ -128,15 +133,26 @@ public interface Logger {
         return Holder.debug;
     }
 
+    static boolean isLogging() {
+        return Holder.log;
+    }
+
+    static void setLogging(boolean log) {
+        Holder.log = log;
+    }
+
     class Holder {
 
         static {
             logger = new DefaultLogger();
             debug = false;
+            log = true;
         }
 
         private static Logger logger;
 
         private static boolean debug;
+
+        private static boolean log;
     }
 }

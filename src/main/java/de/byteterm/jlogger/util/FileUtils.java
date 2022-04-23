@@ -1,11 +1,14 @@
 package de.byteterm.jlogger.util;
 
+import com.google.gson.Gson;
 import de.byteterm.jlogger.Logger;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
+import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.Map;
 
 /**
  * This class provided all file read and write thinks.
@@ -138,6 +141,34 @@ public class FileUtils {
     }
 
     /**
+     * This method searched for the running location of the program.
+     * The location is the correct path to the .exe.
+     * @return the current run path.
+     */
+    public static File getRunningJarLocation() {
+        File file = null;
+        try {
+            file = new File(FileUtils.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
+        } catch (URISyntaxException exception) {
+            logger.error(exception);
+        }
+        return file;
+    }
+
+    /**
+     * @return the parent directory of the running jar file.
+     */
+    public static File getRunningJarParent() {
+        File file = null;
+        try {
+            file = new File(getRunningJarLocation().getParentFile().getPath());
+        } catch (NullPointerException exception) {
+            logger.error(exception);
+        }
+        return file;
+    }
+
+    /**
      * This method create an input stream from the given resource.
      * If the resource not found, the method will throw an IOException.
      * @param resource the file resource.
@@ -176,5 +207,31 @@ public class FileUtils {
         }
         return buffer.toByteArray();
     }
+
+    /*
+     * File utils for JSON
+     */
+    public static void writeJson(String path, Map<String, Object> general, JsonStorage... objects) {
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
+            if(!(objects == null)) {
+                for(JsonStorage storage : objects) {
+                    if(general.containsKey(storage.name())) {
+                        continue;
+                    }
+                    general.put(storage.name(), storage.objects());
+                }
+            }
+            Gson gson = new Gson();
+            writer.write(gson.toJson(general));
+            writer.close();
+        } catch (IOException exception) {
+            logger.error(exception);
+        }
+    }
+
+    public static void writeJson(String path, Object toJson) {
+
+    }
+
 
 }

@@ -209,7 +209,7 @@ public class FileUtils {
     }
 
     /*
-     * File utils for JSON
+     * File utils for JSON and INI
      */
     public static void writeJson(String path, Map<String, Object> general, JsonStorage... objects) {
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {

@@ -223,7 +223,6 @@ public class FileUtils {
             }
             Gson gson = new Gson();
             writer.write(gson.toJson(general));
-            writer.close();
         } catch (IOException exception) {
             logger.error(exception);
         }

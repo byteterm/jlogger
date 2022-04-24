@@ -1,5 +1,7 @@
 package de.byteterm.jlogger;
 
+import de.byteterm.jlogger.util.FileUtils;
+
 public class Test {
 
     private static final Logger log = Logger.getLogger();

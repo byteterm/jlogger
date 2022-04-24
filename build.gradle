@@ -19,7 +19,7 @@ publishing {
     publications {
         maven(MavenPublication) {
             groupId = group
-            artifactId = rootProject.name
+            artifactId = rootProject.name.toLowerCase()
             version = version
             from components.java
         }

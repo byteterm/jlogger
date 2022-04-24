@@ -145,10 +145,10 @@ public class FileUtils {
      * The location is the correct path to the .exe.
      * @return the current run path.
      */
-    public static File getRunningJarLocation() {
+    public static File getRunningJarLocation(Class<?> c) {
         File file = null;
         try {
-            file = new File(FileUtils.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
+            file = new File(c.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
         } catch (URISyntaxException exception) {
             logger.error(exception);
         }
@@ -158,10 +158,10 @@ public class FileUtils {
     /**
      * @return the parent directory of the running jar file.
      */
-    public static File getRunningJarParent() {
+    public static File getRunningJarParent(Class<?> c) {
         File file = null;
         try {
-            file = new File(getRunningJarLocation().getParentFile().getPath());
+            file = new File(getRunningJarLocation(c).getParentFile().getPath());
         } catch (NullPointerException exception) {
             logger.error(exception);
         }

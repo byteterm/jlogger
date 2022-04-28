@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Todo: Commit this class.
@@ -121,7 +122,7 @@ public class DefaultLogger implements Logger {
 
     @Override
     public void error(Throwable throwable) {
-
+        printThrowable(throwable, LogLevel.ERROR);
     }
 
     @Override
@@ -405,7 +406,7 @@ public class DefaultLogger implements Logger {
     private void createLogFile(long timeMillis) {
         String rightLogName = new SimpleDateFormat("dd.MM.yyyy").format(timeMillis) + ".log";
 
-        if (this.logName != rightLogName) {
+        if (!Objects.equals(this.logName, rightLogName)) {
             this.logName = rightLogName;
 
             this.logFile = new File(logDirectory, logName);

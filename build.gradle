@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'de.byteterm'
-version '1.1'
+version '1.1.0a'
 
 repositories {
     mavenCentral()
@@ -13,6 +13,8 @@ repositories {
 dependencies {
     implementation 'org.jetbrains:annotations:23.0.0'
     implementation 'com.google.code.gson:gson:2.9.0'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.2.2'
+    implementation group: 'org.ini4j', name: 'ini4j', version: '0.5.4'
 }
 
 publishing {

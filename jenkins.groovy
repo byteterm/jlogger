@@ -1,5 +1,3 @@
-System.out.println(getVersion() + " " + getArtifact())
-
 static String getVersion() {
     def props = new Properties()
     File propFile = new File("build.gradle")

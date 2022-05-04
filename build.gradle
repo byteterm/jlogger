@@ -1,6 +1,5 @@
 plugins {
     id 'java'
-    id 'maven-publish'
 }
 
 group 'de.byteterm'
@@ -15,29 +14,4 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.9.0'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.2.2'
     implementation group: 'org.ini4j', name: 'ini4j', version: '0.5.4'
-}
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId = group
-            artifactId = rootProject.name.toLowerCase()
-            version = version
-            from components.java
-        }
-    }
-    repositories {
-        maven {
-            url "https://gitlab.com/api/v4/projects/35070360/packages/maven"
-
-            credentials(HttpHeaderCredentials) {
-                name = "Private-Token"
-                value = personalToken
-            }
-
-            authentication {
-                header(HttpHeaderAuthentication)
-            }
-        }
-    }
 }

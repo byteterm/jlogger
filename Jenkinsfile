@@ -3,10 +3,6 @@ pipeline {
 
     agent any
 
-    tools {
-        gradle 'Gradle'
-    }
-
     environment {
         //Build
         version = ''

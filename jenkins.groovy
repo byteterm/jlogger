@@ -1,5 +1,5 @@
 def getVersion() {
-    sh 'gradle build'
+    sh './gradlew build'
 }
 
 

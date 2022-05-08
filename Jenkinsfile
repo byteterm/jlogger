@@ -26,8 +26,6 @@ pipeline {
                     gv = load "jenkins.groovy"
 
                     version = gv.getVersion()
-                    group = gv.getGroup()
-                    artifactId = gv.getArtifact()
                 }
             }
         }
@@ -56,13 +54,6 @@ pipeline {
             steps {
                 script {
                     echo '$version'
-                    echo '$group'
-                    echo '$artifactId'
-                    dockerImage = docker.build "$name:$version"
-
-                    docker.withRegistry(registry, registryCredentials) {
-                        dockerImage.push();
-                    }
                 }
             }
         }

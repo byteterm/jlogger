@@ -25,6 +25,10 @@ pipeline {
             steps {
                 script {
                     gv = load "jenkins.groovy"
+                    sh '''
+                        touch gradle.properties
+                        echo 'org.gradle.java.home=/usr/lib/jvm/java-17-oracle/' > gradle.properties
+                       '''
                 }
             }
         }

@@ -3,11 +3,16 @@ pipeline {
 
     agent any
 
+    tools {
+        gradle 'Gradle'
+    }
+
+
     environment {
         //Build
-        version = ''
-        group = ''
-        artifactId = ''
+        VERSION = '1.1.0a-SNAPSHOT'
+        group = 'de.byteterm'
+        artifactId = 'JLogger'
 
         // Nexus
         registry = "https://nexus.byteterm.de/"
@@ -20,8 +25,6 @@ pipeline {
             steps {
                 script {
                     gv = load "jenkins.groovy"
-
-                    version = gv.getVersion()
                 }
             }
         }
@@ -39,17 +42,22 @@ pipeline {
             }
         }
 
-        // deploy
-        stage('deploy') {
-            when{
-                expression {
-                    BRANCH_NAME == 'main'
-                }
-            }
+        // build
+        stage('build') {
 
             steps {
                 script {
-                    echo '$version'
+                    gv.build()
+                }
+            }
+        }
+
+        // deploy
+        stage('deploy') {
+
+            steps {
+                script {
+                    gv.deploy()
                 }
             }
         }

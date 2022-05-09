@@ -20,7 +20,7 @@ def deploy() {
             nexusVersion: 'nexus2',
             protocol: 'https',
             repository: 'maven-snapshots',
-            version: '1.0'
+            version: '$VERSION'
 }
 
 return this

@@ -30,7 +30,7 @@ def deploy() {
             nexusUrl: 'nexus.byteterm.de',
             nexusVersion: 'nexus3',
             protocol: 'https',
-            repository: 'https://nexus.byteterm.de/content/repositories/maven-public/',
+            repository: 'maven-public',
             version: "$VERSION"
 }
 

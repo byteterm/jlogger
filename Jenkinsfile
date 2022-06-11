@@ -1,6 +1,4 @@
 def gv
-def gradle_properties
-def gradle_build
 pipeline {
 
     agent any
@@ -27,8 +25,6 @@ pipeline {
             steps {
                 script {
                     gv = load "jenkins.groovy"
-                    gradle_build = readProperties file:"${WORKSPACE}/build.gradle"
-                    gradle_properties = readProperties file:"${WORKSPACE}/gradle.properties"
                     VERSION = gv.getVersion()
                     group = gv.getGroup()
                     artifactId = gv.getArtifactId()

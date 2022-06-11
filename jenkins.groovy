@@ -28,7 +28,7 @@ def deploy() {
             credentialsId: "$registryCredentials",
             groupId: "$group",
             nexusUrl: 'nexus.byteterm.de',
-            nexusVersion: 'nexus2',
+            nexusVersion: 'nexus3',
             protocol: 'https',
             repository: 'https://nexus.byteterm.de/content/repositories/maven-public/',
             version: "$VERSION"

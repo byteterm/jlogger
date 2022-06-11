@@ -1,16 +1,16 @@
 def getVersion() {
     gradle_build = readProperties file:"${WORKSPACE}/build.gradle"
-    return gradle_build['version'].trim()
+    return gradle_build['version'].replace("'", "")
 }
 
 def getGroup() {
     gradle_build = readProperties file:"${WORKSPACE}/build.gradle"
-    return gradle_build['group'].trim()
+    return gradle_build['group'].replace("'", "")
 }
 
 def getArtifactId() {
     gradle_properties = readProperties file:"${WORKSPACE}/settings.gradle"
-    return gradle_properties['rootProject.name'].trim()
+    return gradle_properties['rootProject.name'].replace("'", "")
 }
 
 def build() {

@@ -1,5 +1,13 @@
 def getVersion() {
-    sh 'gradle build'
+    return gradle_build['version']
+}
+
+def getGroup() {
+    return gradle_build['group']
+}
+
+def getArtifactId() {
+    return gradle_properties['rootProject.name']
 }
 
 def build() {
@@ -19,7 +27,7 @@ def deploy() {
             nexusUrl: 'nexus.byteterm.de',
             nexusVersion: 'nexus2',
             protocol: 'https',
-            repository: 'https://nexus.byteterm.de/content/repositories/maven-releases/',
+            repository: 'https://nexus.byteterm.de/content/repositories/maven-public/',
             version: "$VERSION"
 }
 

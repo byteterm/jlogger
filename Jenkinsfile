@@ -1,4 +1,6 @@
 def gv
+def gradle_properties
+def gradle_build
 pipeline {
 
     agent any
@@ -10,9 +12,9 @@ pipeline {
 
     environment {
         //Build
-        VERSION = '1.1.0a-SNAPSHOT'
-        group = 'de.byteterm'
-        artifactId = 'JLogger'
+        VERSION = ''
+        group = ''
+        artifactId = ''
 
         // Nexus
         registry = "https://nexus.byteterm.de/"
@@ -25,6 +27,12 @@ pipeline {
             steps {
                 script {
                     gv = load "jenkins.groovy"
+                    gradle_build = readProperties file:"${WORKSPACE}/build.gradle"
+                    gradle_properties = readProperties file:"${WORKSPACE}/gradle.properties"
+                    VERSION = gv.getVersion()
+                    group = gv.getGroup()
+                    artifactId = gv.getArtifactId()
+
                     sh '''
                         touch gradle.properties
                         echo 'org.gradle.java.home=/usr/lib/jvm/java-17-oracle/' > gradle.properties

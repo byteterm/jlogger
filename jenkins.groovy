@@ -9,7 +9,7 @@ def getGroup() {
 }
 
 def getArtifactId() {
-    gradle_properties = readProperties file:"${WORKSPACE}/gradle.properties"
+    gradle_properties = readProperties file:"${WORKSPACE}/settings.gradle"
     return gradle_properties['rootProject.name']
 }
 

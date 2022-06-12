@@ -18,7 +18,7 @@ pipeline {
         registry = "https://nexus.byteterm.de/"
         registryCredentials = 'ByteTerm-Nexus-Username'
     }
-    stages{
+    stages {
 
         // init
         stage('init') {
@@ -37,22 +37,8 @@ pipeline {
             }
         }
 
-        // merge-request
-        stage('merge-request') {
-            when{
-                expression {
-                    BRANCH_NAME.startsWith('MR')
-                }
-            }
-
-            steps {
-                echo 'MERGE'
-            }
-        }
-
         // build
         stage('build') {
-
             steps {
                 script {
                     gv.build()
@@ -60,8 +46,13 @@ pipeline {
             }
         }
 
-        // deploy
-        stage('deploy') {
+        // merge-request
+        stage('merge-request') {
+            when{
+                expression {
+                    BRANCH_NAME.startsWith('MR')
+                }
+            }
 
             steps {
                 script {

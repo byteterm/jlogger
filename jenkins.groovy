@@ -17,21 +17,34 @@ def build() {
     sh 'gradle build'
 }
 
-def deploy() {
-    nexusArtifactUploader artifacts:
-            [[
-                     artifactId: "$artifactId",
-                     classifier: '',
-                     file: "build/libs/${artifactId}-${VERSION}.jar",
-                     type: 'jar'
-             ]],
-            credentialsId: "$registryCredentials",
-            groupId: "$group",
-            nexusUrl: 'nexus.byteterm.de',
+def deployPublic() {
+    repo = ''
+
+    if (VERSION.endsWith("SNAPSHOT")) {
+        repo = 'maven-snapshots'
+    } else {
+        repo = 'maven-releases'
+    }
+
+    nexusArtifactUploader(
             nexusVersion: 'nexus3',
             protocol: 'https',
-            repository: 'maven-public',
-            version: "$VERSION"
+            nexusUrl: 'nexus.byteterm.de',
+            groupId: "$group",
+            version: "$VERSION",
+            repository: "$repo",
+            credentialsId: "$registryCredentials",
+            artifacts: [
+                    [artifactId: "$artifactId",
+                     classifier: '',
+                     file: "build/libs/${artifactId}-${VERSION}.jar",
+                     type: 'jar'],
+                    [artifactId: "$artifactId",
+                     classifier: '',
+                     file: "${artifactId}-${VERSION}.pom",
+                     type: 'pom']
+            ]
+    )
 }
 
 return this

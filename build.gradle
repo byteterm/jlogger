@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'de.byteterm'
-version '1.1.0a-SNAPSHOT'
+version '1.1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()

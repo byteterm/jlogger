@@ -39,6 +39,11 @@ import java.util.Map;
  *           <td style="padding-right: 15px; font-size: 13px">true</td>
  *           <td style="font-size: 13px">true</td>
  *         </tr>
+ *         <tr>
+ *           <td style="padding-right: 15px; font-size: 13px">.txt</td>
+ *           <td style="padding-right: 15px; font-size: 13px">true</td>
+ *           <td style="font-size: 13px">true</td>
+ *         </tr>
  *     </tbody>
  * </table>
  * <p></p>
@@ -446,6 +451,54 @@ public class FileUtils {
         } catch (IOException exception) {
             logger.error(exception);
         }
+    }
+
+    /*
+     * FileUtils for TXT format files
+     */
+
+    /**
+     * This method read .txt format files.
+     * @param path the path to the file.
+     * @return a string list with the lines of the file.
+     */
+    public static List<String> readTxT(@NotNull String path) {
+        List<String> list = new ArrayList<>();
+
+        try(BufferedReader reader = new BufferedReader(new FileReader(path))) {
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                list.add(line);
+            }
+        } catch (IOException exception) {
+            logger.error(exception);
+        }
+
+        return list;
+    }
+
+    /**
+     * This method read .lang files witch have the format from .txt files.
+     * @param path the path to the .lang file.
+     * @return the key and value map for languages systems.
+     */
+    public static Map<String, String> readLang(@NotNull String path) {
+        List<String> content = readTxT(path);
+        Map<String, String> maps = new HashMap<>();
+        int index = 0;
+
+        for(String lines : content) {
+            index++;
+            String[] array = lines.split("=");
+            if(array.length != 2) {
+                logger.warn("File [ " + path + " ] line [ " + index + " ] is not in correct language format!");
+                continue;
+            }
+            maps.put(array[0], array[1]);
+        }
+
+        return maps;
     }
 
 }

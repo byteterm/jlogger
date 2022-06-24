@@ -19,10 +19,15 @@ public enum OperatingSystem {
 
     public static OperatingSystem get() {
         String os = System.getProperty("os.name").toLowerCase();
+        String formatted = os;
+        if(os.contains(" ")) {
+            String[] split = os.split(" ");
+            formatted = split[0];
+        }
         OperatingSystem operatingSystem = null;
         for(OperatingSystem system : values()) {
             for(String alias : system.getAliases()) {
-                if (alias.contains(os) || alias.equalsIgnoreCase(os)) {
+                if (alias.contains(formatted) || alias.equalsIgnoreCase(formatted)) {
                     operatingSystem = system;
                     break;
                 }

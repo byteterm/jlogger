@@ -1,5 +1,7 @@
 package de.byteterm.jlogger;
 
+import de.byteterm.jlogger.util.OperatingSystem;
+
 public class Test {
 
     private static final Logger log = Logger.getLogger();
@@ -7,5 +9,6 @@ public class Test {
     public static void main(String[] args) {
         Logger.enableDebug(true);
         log.info("This is an Logger test....");
+        log.info("test: " + OperatingSystem.get());
     }
 }

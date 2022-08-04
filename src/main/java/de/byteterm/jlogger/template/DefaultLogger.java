@@ -4,12 +4,12 @@ import de.byteterm.jlogger.Logger;
 import de.byteterm.jlogger.level.LogLevel;
 import de.byteterm.jlogger.model.LogObject;
 import de.byteterm.jlogger.util.ConsoleColor;
+import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.lang.management.ManagementFactory;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -277,7 +277,10 @@ public class DefaultLogger implements Logger {
     @Override
     public void setLogPath(String path) {
         this.logDirectory = new File(path);
-        this.logDirectory.mkdir();
+        if (this.logDirectory.mkdirs()
+                && Logger.isDebugEnabled()) {
+            System.out.println("Missing log directories have been created");
+        }
     }
 
     @Override
@@ -393,12 +396,9 @@ public class DefaultLogger implements Logger {
             createLogFile(timeMillis);
 
             try {
-                FileWriter fileWriter = new FileWriter(logFile);
-
-                fileWriter.write(message.replaceAll("\\e\\[[\\d;]*[^\\d;]",""));
-                fileWriter.close();
-            } catch (IOException ex) {
-                error(ex);
+                FileUtils.writeStringToFile(logFile, message.replaceAll("\\e\\[[\\d;]*[^\\d;]", "") + System.lineSeparator(), StandardCharsets.UTF_8, true);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
     }
@@ -411,7 +411,11 @@ public class DefaultLogger implements Logger {
 
             this.logFile = new File(logDirectory, logName);
             try {
-                logFile.createNewFile();
+
+                if (logFile.createNewFile()
+                        && Logger.isDebugEnabled()) {
+                    System.out.println("Missing log File have been created!");
+                }
             } catch (IOException ex) {
                 error(ex);
             }

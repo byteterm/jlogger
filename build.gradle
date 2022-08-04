@@ -9,6 +9,11 @@ repositories {
     maven {
         url = 'https://nexus.byteterm.de/repository/maven-public/'
     }
+    mavenCentral()
+}
+
+test {
+    useJUnitPlatform()
 }
 
 dependencies {
@@ -16,4 +21,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.9.0'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.2.2'
     implementation group: 'org.ini4j', name: 'ini4j', version: '0.5.4'
+    implementation 'commons-io:commons-io:2.11.0'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
 }

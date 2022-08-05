@@ -57,10 +57,10 @@ pipeline {
         }
 
         // merge-request
-        stage('merge-request') {
+        stage('main') {
             when{
                 expression {
-                    BRANCH_NAME.startsWith('MR')
+                    BRANCH_NAME.startsWith('main')
                 }
             }
 

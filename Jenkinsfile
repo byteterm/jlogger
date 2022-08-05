@@ -19,12 +19,12 @@ pipeline {
         registryCredentials = 'ByteTerm-Nexus-Username'
 
         // Discord
-        PICTURE = ''
-        FOOTER = "Version: ${VERSION}"
-        IMAGE = ''
+        PICTURE = ' '
+        FOOTER = ' '
+        IMAGE = ' '
         LINK = 'https://nexus.byteterm.de/service/rest/repository/browse/maven-public/de/byteterm/jlogger/'
         RESULT = 'SUCCESS'
-        THUMBNAIL = ''
+        THUMBNAIL = ' '
         TITLE = 'JLogger - New Update'
         WEBHOOK = credentials('ByteTerm_Discord_WEBHOOK_OFFICIAL')
     }
@@ -36,6 +36,7 @@ pipeline {
                 script {
                     gv = load "jenkins.groovy"
                     VERSION = gv.getVersion()
+                    FOOTER = "Version: ${VERSION}"
                     group = gv.getGroup()
                     artifactId = gv.getArtifactId()
 
@@ -73,7 +74,8 @@ pipeline {
                     def updateMessage = gv.getUpdateMessage();
 
                     if (updateMessage != null) {
-                        discordSend description: "$updateMessage", enableArtifactsList: false, footer: "$FOOTER", image: "$IMAGE", link: "$IMAGE", result: "$RESULT", scmWebUrl: '', thumbnail: "$THUMBNAIL", title: "$TITLE", webhookURL: "$WEBHOOK"
+                        echo updateMessage
+                        discordSend description: updateMessage, enableArtifactsList: false, footer: FOOTER, image: IMAGE, link: IMAGE, result: RESULT, scmWebUrl: '', thumbnail: THUMBNAIL, title: TITLE, webhookURL: WEBHOOK
                     }
                 }
             }

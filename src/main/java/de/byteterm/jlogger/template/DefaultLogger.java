@@ -36,7 +36,7 @@ public class DefaultLogger implements Logger {
     }
 
     @Override
-    public void print(LogObject logObject) {
+    public synchronized void print(LogObject logObject) {
         // Check if the log Level is debug
         if (logObject.getLevel() == LogLevel.DEBUG) {
             // check if log level is activated
@@ -277,9 +277,13 @@ public class DefaultLogger implements Logger {
     @Override
     public void setLogPath(String path) {
         this.logDirectory = new File(path);
+
         if (this.logDirectory.mkdirs()
                 && Logger.isDebugEnabled()) {
             System.out.println("Missing log directories have been created");
+        } else if (!this.logDirectory.mkdirs()
+                && Logger.isDebugEnabled()){
+            System.out.println("Cannot create log directories " + logDirectory.getAbsolutePath());
         }
     }
 
@@ -415,6 +419,9 @@ public class DefaultLogger implements Logger {
                 if (logFile.createNewFile()
                         && Logger.isDebugEnabled()) {
                     System.out.println("Missing log File have been created!");
+                } else if (!logFile.createNewFile()
+                        && Logger.isDebugEnabled()){
+                    System.out.println("Cannot create log File " + logFile.getAbsolutePath());
                 }
             } catch (IOException ex) {
                 error(ex);

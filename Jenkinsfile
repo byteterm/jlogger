@@ -36,7 +36,7 @@ pipeline {
                 script {
                     gv = load "jenkins.groovy"
                     VERSION = gv.getVersion()
-                    TITLE = "JLogger ${VERSION}"
+                    TITLE = "JLogger ${VERSION} - New Version!"
                     group = gv.getGroup()
                     artifactId = gv.getArtifactId()
 

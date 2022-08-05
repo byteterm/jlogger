@@ -38,7 +38,7 @@ pipeline {
 
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId:'ByteTerm-Nexus-Username', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                         def gradleProperties = "org.gradle.java.home=/usr/lib/jvm/java-17-oracle/\nrepoUser=$USERNAME\nrepoPassword=$PASSWORD"
-                        writeFile(file: 'gradle.properties', text: data)
+                        writeFile(file: 'gradle.properties', text: gradleProperties)
                     }
                 }
             }

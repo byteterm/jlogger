@@ -16,7 +16,7 @@ pipeline {
 
         // Discord
         PICTURE = ' '
-        FOOTER = 'https://nexus.byteterm.de/service/rest/repository/browse/maven-public/de/byteterm/jlogger/'
+        FOOTER = ' '
         IMAGE = ' '
         LINK = 'https://nexus.byteterm.de/service/rest/repository/browse/maven-public/de/byteterm/jlogger/'
         RESULT = 'SUCCESS'
@@ -33,6 +33,7 @@ pipeline {
                     gv = load "jenkins.groovy"
                     VERSION = gv.getVersion()
                     TITLE = "JLogger ${VERSION} - New Version!"
+                    FOOTER = "https://nexus.byteterm.de/service/rest/repository/browse/maven-public/de/byteterm/jlogger/${VERSION}/"
                     group = gv.getGroup()
                     artifactId = gv.getArtifactId()
 

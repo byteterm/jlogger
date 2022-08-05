@@ -1,0 +1,8 @@
+version '1.1.1-SNAPSHOT'
+updateMessage 'New:\n' +
+        '- Adding a test environment\n\n' +
+        'Bugs:\n' +
+        '- Fix the problem, that the logger saves only the last line\n' +
+        '- Fix that the logger logs everything in one line\n' +
+        '- Fix that the logger can log bigger elements\n' +
+        '- Fix that the logger overrides the file'

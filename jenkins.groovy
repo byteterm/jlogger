@@ -1,3 +1,13 @@
+def getUpdateMessage() {
+    gradle_build = readProperties file:"${WORKSPACE}/update.gradle"
+
+    if (VERSION == gradle_build['version'].replace("'", "")) {
+        return gradle_build['updateMessage'].replace("'", "")
+    }
+
+    return null
+}
+
 def getVersion() {
     gradle_build = readProperties file:"${WORKSPACE}/build.gradle"
     return gradle_build['version'].replace("'", "")

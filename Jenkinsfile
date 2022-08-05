@@ -20,12 +20,12 @@ pipeline {
 
         // Discord
         PICTURE = ' '
-        FOOTER = ' '
+        FOOTER = 'https://nexus.byteterm.de/service/rest/repository/browse/maven-public/de/byteterm/jlogger/'
         IMAGE = ' '
         LINK = 'https://nexus.byteterm.de/service/rest/repository/browse/maven-public/de/byteterm/jlogger/'
         RESULT = 'SUCCESS'
         THUMBNAIL = ' '
-        TITLE = 'JLogger - New Update'
+        TITLE = ''
         WEBHOOK = credentials('ByteTerm_Discord_WEBHOOK_OFFICIAL')
     }
     stages {
@@ -36,7 +36,7 @@ pipeline {
                 script {
                     gv = load "jenkins.groovy"
                     VERSION = gv.getVersion()
-                    FOOTER = "Version: ${VERSION}"
+                    TITLE = "JLogger ${VERSION}"
                     group = gv.getGroup()
                     artifactId = gv.getArtifactId()
 

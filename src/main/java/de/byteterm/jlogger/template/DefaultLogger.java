@@ -230,7 +230,7 @@ public class DefaultLogger implements Logger {
     }
 
     @Override
-    public void list(LogObject logObject, String headline, char lineChar, ConsoleColor consoleColor) {
+    public synchronized void list(LogObject logObject, String headline, char lineChar, ConsoleColor consoleColor) {
         int lineLength = getMaxLineSize(logObject.getMessageList());
         String regEx = "\\e\\[[\\d;]*[^\\d;]";
 

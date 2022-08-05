@@ -41,4 +41,19 @@ class LoggerTest {
         log.list(messageList, "Test List", ConsoleColor.CYAN, LogLevel.WARN);
         log.empty(" ");
     }
+
+    @Test
+    void testListSameTime() {
+        new Thread(() -> {
+            log.empty(" ");
+            log.list(messageList, "Thread One", ConsoleColor.CYAN, LogLevel.WARN);
+            log.empty(" ");
+        }).start();
+
+        new Thread(() -> {
+            log.empty(" ");
+            log.list(messageList, "Thread Two", ConsoleColor.CYAN, LogLevel.WARN);
+            log.empty(" ");
+        }).start();
+    }
 }

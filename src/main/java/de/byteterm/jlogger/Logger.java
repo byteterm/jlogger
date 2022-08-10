@@ -5,7 +5,6 @@ import de.byteterm.jlogger.template.DefaultLogger;
 import de.byteterm.jlogger.model.LogObject;
 import de.byteterm.jlogger.util.ConsoleColor;
 
-import java.io.File;
 import java.util.List;
 
 /**

@@ -11,10 +11,7 @@ import java.io.*;
 import java.lang.management.ManagementFactory;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Todo: Commit this class.
@@ -252,6 +249,7 @@ public class DefaultLogger implements Logger {
                 + " ] "
                 + borderLine
                 + ConsoleColor.RESET;
+        // ToDo: performance update
 
         LogObject logBorder = new LogObject(border);
         logBorder.setLevel(logObject.getLevel());

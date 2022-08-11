@@ -1,5 +1,6 @@
 package de.byteterm.jlogger.util;
 
+@SuppressWarnings("unused")
 public enum OperatingSystem {
 
     WINDOWS(new String[]{"windows", "win"}),

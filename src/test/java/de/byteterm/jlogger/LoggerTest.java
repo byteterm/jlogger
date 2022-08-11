@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.FileHandler;
 
 class LoggerTest {
 
@@ -37,6 +36,7 @@ class LoggerTest {
 
     @Test
     void testList() {
+        Logger.enableDebug(true);
         log.empty(" ");
         log.list(messageList, "Test List", ConsoleColor.CYAN, LogLevel.WARN);
         log.empty(" ");

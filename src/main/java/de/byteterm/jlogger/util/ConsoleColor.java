@@ -1,10 +1,21 @@
 package de.byteterm.jlogger.util;
 
+import de.byteterm.jlogger.Logger;
+import de.byteterm.jlogger.template.DefaultLogger;
+
 /**
- * Todo: Commit this enum.
+ * With the help of this class you can get the ansi code for the desired color.
+ * This is necessary so that in the console not everything is displayed in one color,
+ * but you can deposit the whole thing with color. In this class you can find
+ * pretty much all colors that are supported by the console by default.
+ *
+ * @see Logger
+ * @see DefaultLogger
+ *
  * @since 1.0
  * @author Niklas Tat
  */
+@SuppressWarnings("unused")
 public enum ConsoleColor {
 
     BLACK("\u001B[30m"),

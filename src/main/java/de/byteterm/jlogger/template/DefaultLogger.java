@@ -11,10 +11,7 @@ import java.io.*;
 import java.lang.management.ManagementFactory;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Todo: Commit this class.
@@ -278,12 +275,8 @@ public class DefaultLogger implements Logger {
     public void setLogPath(String path) {
         this.logDirectory = new File(path);
 
-        if (this.logDirectory.mkdirs()
-                && Logger.isDebugEnabled()) {
-            System.out.println("Missing log directories have been created");
-        } else if (!this.logDirectory.mkdirs()
-                && Logger.isDebugEnabled()){
-            System.out.println("Cannot create log directories " + logDirectory.getAbsolutePath());
+        if (this.logDirectory.mkdirs()) {
+            debug("Missing log directories have been created");
         }
     }
 
@@ -416,12 +409,12 @@ public class DefaultLogger implements Logger {
             this.logFile = new File(logDirectory, logName);
             try {
 
-                if (logFile.createNewFile()
-                        && Logger.isDebugEnabled()) {
-                    System.out.println("Missing log File have been created!");
-                } else if (!logFile.createNewFile()
-                        && Logger.isDebugEnabled()){
-                    System.out.println("Cannot create log File " + logFile.getAbsolutePath());
+                if (logFile.createNewFile()) {
+                    debug("Missing log File have been created!");
+                } else if (!logFile.createNewFile()){
+                    logMessage(System.currentTimeMillis(), " ");
+                    logMessage(System.currentTimeMillis(), "######################################## [ Start of protocol ] ########################################");
+                    debug("Created some space between the old log and the new one");
                 }
             } catch (IOException ex) {
                 error(ex);

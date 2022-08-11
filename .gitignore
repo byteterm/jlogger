@@ -415,6 +415,7 @@ translations/*.qm
 
 # Portable Network Graphics
 *.png
+!example.png
 
 # Animated Portable Network Graphics
 *.apng
